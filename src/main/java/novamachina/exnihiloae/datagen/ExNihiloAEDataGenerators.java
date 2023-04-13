@@ -5,6 +5,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import novamachina.exnihiloae.datagen.client.ExNihiloAEBlockStates;
+import novamachina.exnihiloae.datagen.common.ExNihiloAELangGenerator;
 import novamachina.exnihiloae.datagen.common.ExNihiloAELootTables;
 import novamachina.exnihiloae.datagen.common.ExNihiloAERecipes;
 
@@ -27,6 +28,8 @@ public class ExNihiloAEDataGenerators {
       // BlockStates
       generator.addProvider(
           true, new ExNihiloAEBlockStates(generator, event.getExistingFileHelper()));
+      // Lang
+      generator.addProvider(true, new ExNihiloAELangGenerator(generator, "en_us"));
     }
   }
 }
