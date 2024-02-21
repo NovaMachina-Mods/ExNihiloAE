@@ -367,3 +367,78 @@ modrinth {
     optional.project('the-one-probe')
   }
 }
+
+task makeChangelogHtml(type: GitChangelogTask) {
+  fromRepo = projectDir.absolutePath.toString()
+  file = new File ("changelog.html")
+  untaggedName = "Current release ${project.version}"
+  fromCommit = (System.getenv("GIT_PREVIOUS_SUCCESSFUL_COMMIT") ?: changelogStartCommit)
+  toRef =  "HEAD"
+  templateContent = file("changelog.mustache").text
+
+  doLast {
+    String changeLogText = file('changelog.html').text
+    if (releaseType == "alpha" || releaseType == "beta") {
+      changeLogText = attachPreReleaseWarning(changeLogText, ChangeLogType.HTML)
+    }
+    changeLogText = attachReleaseNotes(changeLogText, ChangeLogType.HTML)
+    file('changelog.html').setText(changeLogText)
+  }
+}
+
+task makeChangelogMd(type: GitChangelogTask) {
+  fromRepo = projectDir.absolutePath.toString()
+  file = new File ("changelog.md")
+  untaggedName = "Current release ${project.version}"
+  fromCommit = (System.getenv("GIT_PREVIOUS_SUCCESSFUL_COMMIT") ?: changelogStartCommit)
+  toRef =  "HEAD"
+  templateContent = file("changelog-markdown.mustache").text
+
+  doLast {
+    String changeLogText = file('changelog.md').text
+    if (releaseType == "alpha" || releaseType == "beta") {
+      changeLogText = attachPreReleaseWarning(changeLogText, ChangeLogType.MARKDOWN)
+    }
+    changeLogText = attachReleaseNotes(changeLogText, ChangeLogType.MARKDOWN)
+    file('changelog.md').setText(changeLogText)
+  }
+}
+
+enum ChangeLogType {
+  HTML,
+  MARKDOWN
+}
+
+String attachReleaseNotes(String changeLogText, ChangeLogType type) {
+  if (type == ChangeLogType.HTML) {
+    def releaseNotesFile = project.file("docs/release_${modVersion}.html")
+    if (releaseNotesFile.exists()) {
+      def releaseNotes = releaseNotesFile.getText()
+      changeLogText = "$releaseNotes\n<br />\n$changeLogText"
+    }
+  } else if (type == ChangeLogType.MARKDOWN) {
+    def releaseNotesFile = project.file("docs/release_${modVersion}.md")
+    if (releaseNotesFile.exists()) {
+      def releaseNotes = releaseNotesFile.getText()
+      changeLogText = "$releaseNotes\n\n$changeLogText"
+    }
+  } else {
+    println("Could not attach release notes warning to changelog")
+  }
+  return changeLogText
+}
+
+String attachPreReleaseWarning(String changeLogText, ChangeLogType type) {
+  if (type == ChangeLogType.HTML) {
+    changeLogText = "<strong>Warning: ${projectProperName} is currently in a pre-release state, and is not recommended for widespread use in modpacks. There may be game breaking bugs, " +
+            "and updating from one pre-release to the next may cause various ${projectProperName} blocks and items to disappear/void their contents. " +
+            "While this is unlikely to happen, make sure to make backups.</strong>\n<br />\n$changeLogText"
+  } else if (type == ChangeLogType.MARKDOWN) {
+    changeLogText = "**Warning: ${projectProperName} is currently in a pre-release state, and is not recommended for widespread use in modpacks. There may be game breaking bugs, " +
+            "and updating from one pre-release to the next may cause various ${projectProperName} blocks and items to disappear/void their contents. " +
+            "While this is unlikely to happen, make sure to make backups.**\n\n$changeLogText"
+  } else {
+    println("Could not attach pre-release warning to changelog")
+  }
+  return changeLogText
+}

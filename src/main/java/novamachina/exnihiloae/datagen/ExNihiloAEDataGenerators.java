@@ -7,6 +7,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import novamachina.exnihiloae.datagen.client.ExNihiloAEBlockStates;
+import novamachina.exnihiloae.datagen.common.ExNihiloAELangGenerator;
 import novamachina.exnihiloae.datagen.common.ExNihiloAELootTables;
 import novamachina.exnihiloae.datagen.common.ExNihiloAERecipes;
 
