@@ -1,39 +1,24 @@
 package novamachina.exnihiloae.common.init;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import novamachina.exnihiloae.common.utility.ExNihiloAEConstants;
-import novamachina.exnihilosequentia.common.block.BaseFallingBlock;
-import novamachina.exnihilosequentia.common.builder.BlockBuilder;
-import novamachina.exnihilosequentia.common.utility.ExNihiloLogger;
+import novamachina.novacore.core.registries.BlockRegistry;
+import novamachina.novacore.world.level.block.BlockBuilder;
+import novamachina.novacore.world.level.block.BlockDefinition;
+
+import java.util.List;
 
 public class ExNihiloAEBlocks {
-
-  private static final DeferredRegister<Block> BLOCKS =
-      DeferredRegister.create(ForgeRegistries.BLOCKS, ExNihiloAEConstants.ModIds.EX_NIHILO_AE);
-  public static final RegistryObject<BaseFallingBlock> CRUSHED_SKYSTONE =
-      BLOCKS.register(
+    private static final BlockRegistry BLOCKS = new BlockRegistry(ExNihiloAEConstants.ModIds.EX_NIHILO_AE);
+    public static final BlockDefinition<Block> CRUSHED_SKYSTONE =
+      BLOCKS.block("Crushed Sky Stone",
           ExNihiloAEConstants.Blocks.CRUSHED_SKYSTONE,
-          () ->
-              new BaseFallingBlock(
-                  new BlockBuilder()
-                      .properties(
-                          BlockBehaviour.Properties.of(Material.SAND)
-                              .strength(0.7F)
-                              .sound(SoundType.GRAVEL))));
-  private static final ExNihiloLogger logger = new ExNihiloLogger(LogUtils.getLogger());
+          () -> BlockBuilder.create().strength(0.7F).sound(SoundType.GRAVEL).buildFallingBlock());
 
-  private ExNihiloAEBlocks() {}
+    private ExNihiloAEBlocks() {}
 
-  public static void init(IEventBus modEventBus) {
-    logger.debug("Register blocks");
-    BLOCKS.register(modEventBus);
-  }
+	public static List<BlockDefinition<?>> getDefinitions() {
+		return BLOCKS.getRegistry();
+	}
 }

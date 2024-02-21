@@ -4,7 +4,7 @@ license = "Creative Commons"
 issueTrackerURL = "${git_url}/issues" #optional
 [[mods]] #mandatory
 modId = "exnihiloae" #mandatory
-version = "${version}" #mandatory
+version = "${mod_version}" #mandatory
 displayName = "Ex Nihilo: Sequentia - AE2 Addon" #mandatory
 displayURL = "${curseforge_url}" #optional
 logoFile = "logo.png" #optional
@@ -17,12 +17,18 @@ description = '''
 [[dependencies.exnihiloae]]
 modId = "exnihilosequentia"
 mandatory = true
-versionRange = "${ex_nihilo_version}"
+versionRange = "${exnihilo_range}"
+ordering = "AFTER"
+side = "BOTH"
+[[dependencies.exnihiloae]]
+modId = "novacore"
+mandatory = true
+versionRange = "${nova_core_range}"
 ordering = "AFTER"
 side = "BOTH"
 [[dependencies.exnihiloae]]
 modId = "ae2"
 mandatory = true
-versionRange = "${ae2_version}"
+versionRange = "${ae2_range}"
 ordering = "AFTER"
 side = "BOTH"

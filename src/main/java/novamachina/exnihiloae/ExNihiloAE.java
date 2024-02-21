@@ -5,12 +5,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import novamachina.exnihiloae.common.init.ExNihiloAEInitialization;
 import novamachina.exnihiloae.common.utility.ExNihiloAEConstants;
-import novamachina.exnihilosequentia.common.utility.ExNihiloLogger;
+import org.slf4j.Logger;
 
 @Mod(ExNihiloAEConstants.ModIds.EX_NIHILO_AE)
 public class ExNihiloAE {
-
-  private static final ExNihiloLogger logger = new ExNihiloLogger(LogUtils.getLogger());
+  public static final Logger logger = LogUtils.getLogger();
 
   public ExNihiloAE() {
     logger.debug("Starting Ex Nihilo: Sequentia - AE2 Addon");
