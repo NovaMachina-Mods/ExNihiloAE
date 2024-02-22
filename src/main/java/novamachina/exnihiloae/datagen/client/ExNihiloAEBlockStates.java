@@ -1,6 +1,6 @@
 package novamachina.exnihiloae.datagen.client;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -10,13 +10,13 @@ import novamachina.exnihiloae.common.utility.ExNihiloAEConstants;
 
 public class ExNihiloAEBlockStates extends BlockStateProvider {
 
-  public ExNihiloAEBlockStates(DataGenerator gen, ExistingFileHelper exFileHelper) {
+  public ExNihiloAEBlockStates(PackOutput gen, ExistingFileHelper exFileHelper) {
     super(gen, ExNihiloAEConstants.ModIds.EX_NIHILO_AE, exFileHelper);
   }
 
   @Override
   protected void registerStatesAndModels() {
-    basicBlock(ExNihiloAEBlocks.CRUSHED_SKYSTONE.get());
+    basicBlock(ExNihiloAEBlocks.CRUSHED_SKYSTONE.block());
   }
 
   private void basicBlock(Block block) {

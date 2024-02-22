@@ -1,0 +1,14 @@
+{
+  "type": "exnihilosequentia:precipitate",
+  "fluid": {
+    "amount": 1000,
+    "fluid": "minecraft:lava"
+  },
+  "input": {
+    "item": "ae2:sky_dust"
+  },
+  "result": {
+    "count": 1,
+    "item": "ae2:sky_stone_block"
+  }
+}

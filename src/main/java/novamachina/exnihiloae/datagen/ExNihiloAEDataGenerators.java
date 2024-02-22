@@ -1,6 +1,8 @@
 package novamachina.exnihiloae.datagen;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,19 +19,19 @@ public class ExNihiloAEDataGenerators {
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
     DataGenerator generator = event.getGenerator();
+	  PackOutput output = generator.getPackOutput();
+	  ExistingFileHelper helper = event.getExistingFileHelper();
 
     if (event.includeServer()) {
       // Recipes
-      generator.addProvider(true, new ExNihiloAERecipes(generator));
+      generator.addProvider(true, new ExNihiloAERecipes(output, helper));
       // LootTable
-      generator.addProvider(true, new ExNihiloAELootTables(generator));
+      generator.addProvider(true, new ExNihiloAELootTables(output));
     }
     if (event.includeClient()) {
       // BlockStates
       generator.addProvider(
-          true, new ExNihiloAEBlockStates(generator, event.getExistingFileHelper()));
-      // Lang
-      generator.addProvider(true, new ExNihiloAELangGenerator(generator, "en_us"));
+          true, new ExNihiloAEBlockStates(output, event.getExistingFileHelper()));
     }
   }
 }

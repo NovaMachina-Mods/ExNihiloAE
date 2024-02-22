@@ -1,0 +1,13 @@
+{
+  "type": "exnihilosequentia:crushing",
+  "input": {
+    "item": "ae2:sky_stone_block"
+  },
+  "results": [
+    {
+      "chance": 1.0,
+      "count": 0,
+      "item": "minecraft:air"
+    }
+  ]
+}

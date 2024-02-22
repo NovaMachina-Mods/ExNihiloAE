@@ -1,18 +1,29 @@
 package novamachina.exnihiloae.common.init;
 
-import com.mojang.logging.LogUtils;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraftforge.eventbus.api.IEventBus;
-import novamachina.exnihilosequentia.common.utility.ExNihiloLogger;
+import net.minecraftforge.registries.RegisterEvent;
+import novamachina.exnihiloae.ExNihiloAE;
+import novamachina.novacore.bootstrap.ForgeBlockRegistry;
+import novamachina.novacore.core.IRegistry;
+import novamachina.novacore.world.level.block.BlockDefinition;
 
 public class ExNihiloAEInitialization {
 
-  private static final ExNihiloLogger logger = new ExNihiloLogger(LogUtils.getLogger());
+    private ExNihiloAEInitialization() {}
 
-  private ExNihiloAEInitialization() {}
+    public static void init(IEventBus modEventBus) {
+    ExNihiloAE.logger.debug("Initializing modded items");
+      modEventBus.addListener((RegisterEvent event) -> {
+          if (event.getRegistryKey().equals(BuiltInRegistries.BLOCK.key())) {
+              initBlocks(new ForgeBlockRegistry());
+          }
+      });
+    }
 
-  public static void init(IEventBus modEventBus) {
-    logger.debug("Initializing modded items");
-    ExNihiloAEBlocks.init(modEventBus);
-    ExNihiloAEItems.init(modEventBus);
-  }
+    public static void initBlocks(IRegistry<BlockDefinition<?>> registry) {
+        for (BlockDefinition<?> blockDefinition : ExNihiloAEBlocks.getDefinitions()) {
+            registry.register(blockDefinition);
+        }
+    }
 }

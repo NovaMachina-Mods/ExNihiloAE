@@ -14,7 +14,9 @@
           "name": "exnihiloae:crushed_sky_stone"
         }
       ],
+      "name": "main",
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "exnihiloae:blocks/crushed_sky_stone"
 }
